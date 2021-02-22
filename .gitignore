@@ -1,0 +1,9 @@
+# The blackhole:
+node_modules/
+
+# Build dirs:
+build/
+dist/
+
+# secrets
+.env
