@@ -1,7 +1,7 @@
 {
-  "name": "open-up",
+  "name": "open-up-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "The place where you can be you",
   "main": "index.js",
   "scripts": {
     "serve:api": "ts-node index",
