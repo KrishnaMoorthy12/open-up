@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/KrishnaMoorthy12/open-up#readme",
   "dependencies": {
+    "bcrypt": "^5.0.0",
     "chalk": "^4.1.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
@@ -27,6 +28,7 @@
     "morgan": "^1.10.0"
   },
   "devDependencies": {
+    "@types/bcrypt": "^3.0.0",
     "@types/express": "^4.17.11",
     "@types/morgan": "^1.9.2",
     "@types/node": "^14.14.31",

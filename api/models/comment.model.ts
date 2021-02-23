@@ -1,6 +1,6 @@
 import { Schema, model } from 'mongoose';
 
-const PostSchema = new Schema({
+const CommentSchema = new Schema({
   post: { type: Schema.Types.ObjectId, required: true },
   parent: { type: Schema.Types.ObjectId, required: true },
 
@@ -17,4 +17,4 @@ const PostSchema = new Schema({
   tags: [{ type: Schema.Types.String }]
 });
 
-export default model('post', PostSchema);
+export default model('comment', CommentSchema);
