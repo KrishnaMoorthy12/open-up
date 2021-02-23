@@ -4,6 +4,7 @@ import Logger from 'js-logger';
 import 'dotenv/config';
 
 import { requestLogger } from './api/middlewares';
+import APIRouter from './api/router';
 
 const PORT = process.env.PORT || 5000;
 
@@ -19,6 +20,8 @@ Logger.useDefaults({
 const server = express();
 
 server.use(requestLogger);
+
+server.use('/api', APIRouter);
 
 server.get('*', (_req, res) => {
   res.sendStatus(200);
