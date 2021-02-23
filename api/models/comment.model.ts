@@ -1,6 +1,9 @@
 import { Schema, model } from 'mongoose';
 
 const PostSchema = new Schema({
+  post: { type: Schema.Types.ObjectId, required: true },
+  parent: { type: Schema.Types.ObjectId, required: true },
+
   author: { type: Schema.Types.ObjectId },
   is_anonymous: { type: Schema.Types.Boolean, default: false },
 
