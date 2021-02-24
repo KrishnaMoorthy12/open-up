@@ -31,15 +31,16 @@ server.get('*', (_req, res) => {
 });
 
 server.listen(PORT, async () => {
-  Logger.info(`Server started at port ${chalk.magenta(PORT)}`);
-  Logger.info(`Listening for requests at ${chalk.cyan(`http://127.0.0.1:${PORT}`)}`);
-  Logger.debug(`Database server is at ${chalk.cyan(DB_URI)}`);
+  Logger.info(`Server started at port ${chalk.magenta(PORT)}.`);
+  Logger.info(`Listening for requests at ${chalk.cyan(`http://127.0.0.1:${PORT}`)}.`);
 
   try {
-    await mongoose.connect(DB_URI!, { useNewUrlParser: true, useUnifiedTopology: true });
-    Logger.info(`Database connection ${chalk.greenBright('successful')}`);
+    Logger.debug(`Database server is at ${chalk.cyan(DB_URI)}.`);
+    const options = { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true };
+    await mongoose.connect(DB_URI!, options);
+    Logger.info(`Database connection ${chalk.greenBright('successful.')}`);
   } catch (err) {
-    Logger.info(`Database connection ${chalk.redBright('failed')}`);
+    Logger.info(`Database connection ${chalk.redBright('failed.')}`);
     Logger.error(`Error: could not connect to the database at ${DB_URI}\n`, err);
   }
 });
