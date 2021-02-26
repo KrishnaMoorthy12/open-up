@@ -1,14 +1,9 @@
 import Express from 'express';
 import Logger from 'js-logger';
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
-import chalk from 'chalk';
 import 'dotenv/config';
 
-import { IToken } from '../types';
 import { User } from '../models';
-
-const AUTH_SECRET = process.env.AUTH_SECRET!;
 
 export const newUser = async (req: Express.Request, res: Express.Response) => {
   const { body } = req;
@@ -26,23 +21,13 @@ export const newUser = async (req: Express.Request, res: Express.Response) => {
 };
 
 export const updateUser = async (req: Express.Request, res: Express.Response) => {
-  const {
-    body,
-    headers: { authorization }
-  } = req;
-
-  const token = authorization?.split(' ')[1];
-  if (!token) {
-    return res.status(401).send('Not authorized');
-  }
-
-  Logger.debug(`The token is: ${chalk.bold(token)}.`);
-  const user = jwt.verify(token, AUTH_SECRET) as IToken;
+  const { loggedInUser, ...body } = req.body;
 
   try {
-    await User.findOneAndUpdate({ username: user.username }, body);
+    await User.findOneAndUpdate({ username: loggedInUser.username }, body);
+    Logger.debug('User updated successfully.');
   } catch (err) {
-    Logger.debug('Error occurred', err);
+    Logger.debug('Error occurred: ', err);
     return res.send('Could not update you account');
   }
 };

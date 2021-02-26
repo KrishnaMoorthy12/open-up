@@ -1,6 +1,7 @@
 import express from 'express';
 
 import { newUser, updateUser } from '../controllers/user.controller';
+import { authenticatedOnly } from '../middlewares/auth.middleware';
 
 /*
  * Controls routes /api/user
@@ -9,6 +10,6 @@ import { newUser, updateUser } from '../controllers/user.controller';
 const router = express.Router();
 
 router.post('/new', newUser);
-router.post('/update', updateUser);
+router.post('/update', authenticatedOnly, updateUser);
 
 export default router;
