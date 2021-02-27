@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model, Document } from 'mongoose';
 
 const PostSchema = new Schema({
   author: { type: Schema.Types.ObjectId },
@@ -14,4 +14,15 @@ const PostSchema = new Schema({
   tags: [{ type: Schema.Types.String }]
 });
 
-export default model('post', PostSchema);
+interface IPost extends Document {
+  author: string;
+  is_anonymous?: boolean;
+  title: string;
+  body: string;
+  views?: number;
+  upvotes?: number;
+  downvotes?: number;
+  tags?: Array<string>;
+}
+
+export default model<IPost>('post', PostSchema);
