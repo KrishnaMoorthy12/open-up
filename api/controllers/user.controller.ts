@@ -5,6 +5,15 @@ import 'dotenv/config';
 
 import { User } from '../models';
 
+/*
+ * New User
+ *
+ * @route: /api/user/new
+ * @method: POST
+ * requires: body { username, name, bio?, email, password }
+ * response: 'User created successfully' | 'Could not create your account'
+ */
+
 export const newUser = async (req: Express.Request, res: Express.Response) => {
   const { body } = req;
   Logger.debug('Acknowledged: ', body);
@@ -20,11 +29,24 @@ export const newUser = async (req: Express.Request, res: Express.Response) => {
   }
 };
 
+/*
+ * Update User
+ *
+ * @route: /api/user/update
+ * @method: POST
+ * requires: body { username?, name?, bio?, email?, password? }
+ * response: 'User updated successfully' | 'Could not update your account'
+ */
+
 export const updateUser = async (req: Express.Request, res: Express.Response) => {
   const { loggedInUser, ...body } = req.body;
 
   try {
-    await User.findOneAndUpdate({ username: loggedInUser.username }, body);
+    const updatedUser = await User.findOneAndUpdate(
+      { username: loggedInUser.username },
+      { $set: { ...body } }
+    );
+    await updatedUser?.save();
     Logger.debug('User updated successfully.');
   } catch (err) {
     Logger.debug('Error occurred: ', err);

@@ -1,6 +1,6 @@
 import express from 'express';
 
-import { login, verify } from '../controllers/auth.controller';
+import { login } from '../controllers/auth.controller';
 
 /*
  * Controls routes /api/auth
@@ -9,6 +9,5 @@ import { login, verify } from '../controllers/auth.controller';
 const router = express.Router();
 
 router.post('/login', login);
-router.post('/verify', verify);
 
 export default router;

@@ -9,6 +9,13 @@ import { User } from '../models';
 
 const AUTH_SECRET = process.env.AUTH_SECRET!;
 
+/*
+ * @route: /api/auth/login
+ * @method: POST
+ * requires: body { username, password }
+ * response: <JWT Token>
+ */
+
 export const login = async (req: Express.Request, res: Express.Response) => {
   const {
     body: { username, password }
