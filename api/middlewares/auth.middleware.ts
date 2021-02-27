@@ -1,7 +1,7 @@
-import { Request, Response, NextFunction } from 'express';
-import jwt from 'jsonwebtoken';
 import chalk from 'chalk';
+import { NextFunction, Request, Response } from 'express';
 import Logger from 'js-logger';
+import jwt from 'jsonwebtoken';
 import 'dotenv/config';
 
 import { IToken } from '../types';

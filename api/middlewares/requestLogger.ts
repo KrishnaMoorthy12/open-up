@@ -1,5 +1,5 @@
-import morgan from 'morgan';
 import chalk from 'chalk';
+import morgan from 'morgan';
 
 export default morgan((tokens, req, res) => {
   let status: any = tokens.status(req, res);

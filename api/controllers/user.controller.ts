@@ -1,7 +1,6 @@
-import Express from 'express';
-import Logger from 'js-logger';
 import bcrypt from 'bcrypt';
-import 'dotenv/config';
+import { Request, Response } from 'express';
+import Logger from 'js-logger';
 
 import { User } from '../models';
 
@@ -14,7 +13,7 @@ import { User } from '../models';
  * response: 'User created successfully' | 'Could not create your account'
  */
 
-export const newUser = async (req: Express.Request, res: Express.Response) => {
+export const newUser = async (req: Request, res: Response) => {
   const { body } = req;
   Logger.debug('Acknowledged: ', body);
   const theNewUser = new User({ ...body, password: bcrypt.hashSync(body.password, 10) });
@@ -38,7 +37,7 @@ export const newUser = async (req: Express.Request, res: Express.Response) => {
  * response: 'User updated successfully' | 'Could not update your account'
  */
 
-export const updateUser = async (req: Express.Request, res: Express.Response) => {
+export const updateUser = async (req: Request, res: Response) => {
   const { loggedInUser, ...body } = req.body;
 
   try {

@@ -1,8 +1,8 @@
-import Express from 'express';
-import Logger from 'js-logger';
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
 import chalk from 'chalk';
+import { Request, Response } from 'express';
+import Logger from 'js-logger';
+import jwt from 'jsonwebtoken';
 import 'dotenv/config';
 
 import { User } from '../models';
@@ -16,7 +16,7 @@ const AUTH_SECRET = process.env.AUTH_SECRET!;
  * response: <JWT Token>
  */
 
-export const login = async (req: Express.Request, res: Express.Response) => {
+export const login = async (req: Request, res: Response) => {
   const {
     body: { username, password }
   } = req;
