@@ -23,6 +23,10 @@ interface IPost extends Document {
   upvotes?: number;
   downvotes?: number;
   tags?: Array<string>;
+
+  createdAt: string;
+  updatedAt: string;
+  _doc?: IPost;
 }
 
 export default model<IPost>('post', PostSchema);

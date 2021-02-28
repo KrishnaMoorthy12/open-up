@@ -4,7 +4,7 @@ const CommentSchema = new Schema({
   post: { type: Schema.Types.ObjectId, required: true },
   parent: { type: Schema.Types.ObjectId, required: true },
 
-  author: { type: Schema.Types.ObjectId },
+  author: { type: Schema.Types.String, required: true },
   is_anonymous: { type: Schema.Types.Boolean, default: false },
 
   body: { type: Schema.Types.String, required: true },
@@ -23,6 +23,10 @@ interface IComment extends Document {
   upvotes?: number;
   downvotes?: number;
   depth?: number;
+
+  createdAt: string;
+  updatedAt: string;
+  _doc?: IComment;
 }
 
 export default model<IComment>('comment', CommentSchema);

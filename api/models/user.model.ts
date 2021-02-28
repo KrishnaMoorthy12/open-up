@@ -19,6 +19,10 @@ interface IUser extends Document {
   bio?: string;
   email: string;
   password: string;
+
+  createdAt: string;
+  updatedAt: string;
+  _doc?: IUser;
 }
 
 export default model<IUser>('user', UserSchema);
