@@ -30,3 +30,35 @@ export const newPost = async (req: Request, res: Response) => {
     return res.status(500).json({ message: 'Could not create your post' });
   }
 };
+
+/*
+ * Get Post
+ *
+ * @route: /api/post/:id
+ * @method: GET
+ *
+ */
+
+export const getPost = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const { loggedInUser } = req.body;
+
+  try {
+    const thePost = await Post.findById(id);
+    if (!thePost) {
+      return res.status(400).json({ message: 'Invalid post ID' });
+    }
+
+    return res.status(200).json({
+      data: {
+        ...thePost._doc,
+        author:
+          thePost.is_anonymous && loggedInUser.username !== thePost.author
+            ? 'Anonymous'
+            : thePost.author
+      }
+    });
+  } catch (err) {
+    return res.status(500).json({ message: 'Error getting the post' });
+  }
+};
