@@ -1,8 +1,11 @@
 import bcrypt from 'bcrypt';
 import { Request, Response } from 'express';
 import Logger from 'js-logger';
+import 'dotenv/config';
 
 import { User } from '../models';
+
+const SALT_ROUNDS = parseInt(process.env.SALT_ROUNDS!);
 
 /*
  * New User
@@ -16,7 +19,7 @@ import { User } from '../models';
 export const newUser = async (req: Request, res: Response) => {
   const { body } = req;
   Logger.debug('Acknowledged: ', body);
-  const theNewUser = new User({ ...body, password: bcrypt.hashSync(body.password, 10) });
+  const theNewUser = new User({ ...body, password: bcrypt.hashSync(body.password, SALT_ROUNDS) });
 
   try {
     const { password, __v, ...userInCollection } = await theNewUser.save();
@@ -42,7 +45,7 @@ export const updateUser = async (req: Request, res: Response) => {
 
   try {
     let newDetails = { ...body };
-    if (body.password) newDetails.password = bcrypt.hashSync(body.password, 10);
+    if (body.password) newDetails.password = bcrypt.hashSync(body.password, SALT_ROUNDS);
     const updatedUser = await User.findOneAndUpdate(
       { username: loggedInUser.username },
       { $set: newDetails },
