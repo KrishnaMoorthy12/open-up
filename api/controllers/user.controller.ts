@@ -38,15 +38,19 @@ export const newUser = async (req: Request, res: Response) => {
  */
 
 export const updateUser = async (req: Request, res: Response) => {
-  const { loggedInUser, ...body } = req.body;
+  const { loggedInUser, password, ...body } = req.body;
 
   try {
+    let newDetails = { ...body };
+    if (password) newDetails.password = bcrypt.hashSync(password, 10);
     const updatedUser = await User.findOneAndUpdate(
       { username: loggedInUser.username },
-      { $set: { ...body } }
+      { $set: newDetails },
+      { useFindAndModify: false }
     );
     await updatedUser?.save();
     Logger.debug('User updated successfully.');
+    return res.send('User update successfully');
   } catch (err) {
     Logger.debug('Error occurred: ', err);
     return res.send('Could not update you account');
