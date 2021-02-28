@@ -22,11 +22,11 @@ export const newPost = async (req: Request, res: Response) => {
   Logger.debug('Acknowledged: ', postDocument);
 
   try {
-    await theNewPost.save();
+    const postInCollection = await theNewPost.save();
     Logger.debug('New post created successfully.');
-    return res.status(200).send('Post created successfully');
+    return res.status(200).json({ message: 'Post created successfully', data: postInCollection });
   } catch (err) {
     Logger.debug(err);
-    return res.send('Could not create your post');
+    return res.status(500).json({ message: 'Could not create your post' });
   }
 };

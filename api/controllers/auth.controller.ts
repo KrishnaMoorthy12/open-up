@@ -29,9 +29,9 @@ export const login = async (req: Request, res: Response) => {
       const token = jwt.sign({ username }, AUTH_SECRET, { expiresIn: '24h' });
       Logger.debug('Login successful.');
       res.setHeader('authorization', `Bearer ${token}`);
-      return res.send(token);
+      return res.status(200).json({ message: 'Authorized', data: token });
     } else {
-      return res.send('Wrong password');
+      return res.status(401).json({ message: 'Wrong password' });
     }
   } catch (err) {
     Logger.debug(chalk.red('Error: '), err);

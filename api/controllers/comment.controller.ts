@@ -20,11 +20,13 @@ export const newComment = async (req: Request, res: Response) => {
   Logger.debug('Acknowledged: ', commentDocument);
 
   try {
-    await theNewComment.save();
+    const commentInCollection = await theNewComment.save();
     Logger.debug('Comment posted successfully.');
-    return res.status(200).send('Comment posted successfully');
+    return res
+      .status(200)
+      .json({ message: 'Comment posted successfully', data: commentInCollection });
   } catch (err) {
     Logger.debug(err);
-    return res.send('Could not post your comment');
+    return res.json({ message: 'Could not post your comment' });
   }
 };
