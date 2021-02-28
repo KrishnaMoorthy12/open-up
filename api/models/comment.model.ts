@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model, Document } from 'mongoose';
 
 const CommentSchema = new Schema({
   post: { type: Schema.Types.ObjectId, required: true },
@@ -7,14 +7,22 @@ const CommentSchema = new Schema({
   author: { type: Schema.Types.ObjectId },
   is_anonymous: { type: Schema.Types.Boolean, default: false },
 
-  title: { type: Schema.Types.String, required: true },
   body: { type: Schema.Types.String, required: true },
-
-  views: { type: Schema.Types.Number, default: 0 },
   upvotes: { type: Schema.Types.Number, default: 0 },
   downvotes: { type: Schema.Types.Number, default: 0 },
 
-  tags: [{ type: Schema.Types.String }]
+  depth: { type: Schema.Types.Number, default: 0 }
 });
 
-export default model('comment', CommentSchema);
+interface IComment extends Document {
+  post: string;
+  parent: string;
+  author?: string;
+  is_anonymous?: boolean;
+  body: string;
+  upvotes?: number;
+  downvotes?: number;
+  depth?: number;
+}
+
+export default model<IComment>('comment', CommentSchema);
