@@ -5,7 +5,7 @@ import 'dotenv/config';
 
 import { User } from '../models';
 
-const SALT_ROUNDS = parseInt(process.env.SALT_ROUNDS!);
+const SALT_ROUNDS = +process.env.SALT_ROUNDS!;
 
 /*
  * New User

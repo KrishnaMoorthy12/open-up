@@ -18,13 +18,13 @@ export const newPost = async (req: Request, res: Response) => {
 
   // TODO: auto tag finder
 
-  const theNewPost = new Post(postDocument);
+  let theNewPost = new Post(postDocument);
   Logger.debug('Acknowledged: ', postDocument);
 
   try {
-    const postInCollection = await theNewPost.save();
+    theNewPost = await theNewPost.save();
     Logger.debug('New post created successfully.');
-    return res.status(200).json({ message: 'Post created successfully', data: postInCollection });
+    return res.status(200).json({ message: 'Post created successfully', data: theNewPost });
   } catch (err) {
     Logger.debug(err);
     return res.status(500).json({ message: 'Could not create your post' });

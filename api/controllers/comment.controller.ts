@@ -16,15 +16,13 @@ export const newComment = async (req: Request, res: Response) => {
   const { loggedInUser, ...body } = req.body;
   const commentDocument = { author: loggedInUser.username, ...body };
 
-  const theNewComment = new Comment(commentDocument);
+  let theNewComment = new Comment(commentDocument);
   Logger.debug('Acknowledged: ', commentDocument);
 
   try {
-    const commentInCollection = await theNewComment.save();
+    theNewComment = await theNewComment.save();
     Logger.debug('Comment posted successfully.');
-    return res
-      .status(200)
-      .json({ message: 'Comment posted successfully', data: commentInCollection });
+    return res.status(200).json({ message: 'Comment posted successfully', data: theNewComment });
   } catch (err) {
     Logger.debug(err);
     return res.json({ message: 'Could not post your comment' });
