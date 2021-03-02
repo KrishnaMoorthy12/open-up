@@ -1,3 +1,4 @@
+import chalk from 'chalk';
 import { Request, Response } from 'express';
 import Logger from 'js-logger';
 
@@ -26,5 +27,23 @@ export const newComment = async (req: Request, res: Response) => {
   } catch (err) {
     Logger.debug(err);
     return res.json({ message: 'Could not post your comment' });
+  }
+};
+
+/*
+ * Get Comments of a post [depth 0]
+ *
+ * @route: /api/post/:id/comments
+ * @method: GET
+ *
+ */
+export const getCommentsOfAPost = async (req: Request, res: Response) => {
+  const { id: postId } = req.params;
+
+  try {
+    const comments = await Comment.find({ post: postId, depth: 0 });
+    return res.status(200).json({ message: `${comments.length} comments found`, data: comments });
+  } catch (err) {
+    Logger.error(chalk.red('Error: '), err);
   }
 };
